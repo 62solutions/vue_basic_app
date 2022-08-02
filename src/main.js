@@ -1,6 +1,27 @@
 import { createApp } from 'vue'
-import App from './App.vue'
-import router from './router'
-import store from './store'
+import App from './App'
+import components from '@/components/UI';
+import router from "@/router/router";
+import store from './store';
 
-createApp(App).use(store).use(router).mount('#app')
+
+import directives from './directives';
+
+const app = createApp(App)
+
+// глобальная регистрация компонентов
+components.forEach(component => {
+    app.component(component.name, component)
+})
+
+directives.forEach(directive => {
+    app.directive(directive.name, directive)
+})
+
+//app.directive('intersection', VIntersection)
+
+// смонтировать в контейнер в index.html
+app
+    .use(router)
+    .use(store)
+    .mount('#app')
